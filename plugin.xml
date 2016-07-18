@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-mirrorcamera"
+        version="0.0.1">
+    
+    <name>TDMirror</name>
+    
+    <description>This plugin for Cordova</description>
+    
+    <keywords>Cordova</keywords>
+    
+    <repo>https://github.com/terrydr/com.terrydr.mirror.git</repo>
+    <issue>https://github.com/terrydr/com.terrydr.mirror.git</issue>
+    
+    <license>MIT</license>
+    
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+    
+    <js-module src="www/TDMirror.js" name="TDMirror">
+        <clobbers target="tdmirror" />
+    </js-module>
+    
+	<platform name="android">
+        <config-file  target="res/xml/config.xml" parent="/*">
+            <feature  name="TDMirror">
+                <!--TDEye:继承CDVPlugin的类名 -->
+                <param  name="android-package"  value="com.terrydr.mirrorscopes.Plugin_intent"/>
+            </feature>
+        </config-file>
+		 <config-file target="AndroidManifest.xml" parent="/*">
+			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+			<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+			<uses-permission android:name="android.permission.CAMERA" />
+			<uses-feature android:name="android.hardware.camera" />
+			<uses-feature android:name="android.hardware.camera.autofocus" />
+			<uses-feature
+				android:name="android.hardware.microphone"
+				android:required="false" />
+        </config-file>
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">  
+			<activity
+            android:name="com.terrydr.mirrorscopes.CameraActivity"
+            android:label="@string/ms_app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+			</activity>
+			<activity
+				android:name="com.terrydr.mirrorscopes.AlbumItemAty"
+				android:label="@string/app_name"
+				android:screenOrientation="portrait"
+				android:theme="@android:style/Theme.NoTitleBar" >
+			</activity>
+			<activity
+				android:name="com.terrydr.mirrorscopes.AlbumItemAtyForJs"
+				android:label="@string/app_name"
+				android:screenOrientation="portrait"
+				android:theme="@android:style/Theme.NoTitleBar" >
+			</activity>
+        </config-file>				 
+		<source-file src="src/android/com/terrydr/mirrorscopes"
+                     target-dir="src/com/terrydr"/>		
+    </platform>
+</plugin>

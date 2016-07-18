@@ -1,0 +1,21 @@
+package com.terrydr.mirrorscopes;
+
+import com.terrydr.mirrorscopes.CameraContainer.TakePictureListener;
+
+import android.hardware.Camera.PictureCallback;
+
+public interface CameraOperation {
+
+	/**  
+	 *  拍照
+	 *  @param callback 拍照回调函数 
+	 *  @param listener 拍照动作监听函数  
+	 */
+	public void takePicture(PictureCallback callback,TakePictureListener listener);
+	
+	/**  
+	 *  设置爆光
+	 *  @return  
+	 */
+	public void setCameraISO(int iso,boolean lightOn);
+}
