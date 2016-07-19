@@ -89,6 +89,8 @@ public class AlbumItemAty extends Activity implements OnClickListener,OnSingleTa
 					recordSelectPaths = new ArrayList<String>(keySet);
 				}
 			}
+			Log.e(TAG, "recordSelectPaths:" + recordSelectPaths);
+			Log.e(TAG, "recordSelectPaths.size:" + recordSelectPaths.size());
 		}
 		group = (ViewGroup)findViewById(R.id.imagegroup_ll); 
 		mViewPager=(AlbumViewPager)findViewById(R.id.albumviewpager);
@@ -184,6 +186,30 @@ public class AlbumItemAty extends Activity implements OnClickListener,OnSingleTa
 				imageView.setLayoutParams(new LayoutParams(
 						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 				tips[i] = imageView;
+				Log.e(TAG, "childCount:" + childCount);
+				Log.e(TAG, "files:" + files.size());
+				Log.e(TAG, "i:" + i);
+				if(isPlugin){
+					if(recordSelectPaths != null){
+						if(recordSelectPaths.contains(file.getAbsolutePath())){
+							albumitem_selected_cb_bool[i] = "true";
+							tips[i].setBackgroundResource(R.drawable.albumitem_selected_status);
+							albumitem_selected_cb.setChecked(true);
+							selectPaths.add(file.getAbsolutePath());
+							if (file.getAbsolutePath().contains(mROOTLEFT)) {
+								selectPathsLeft.add(file.getAbsolutePath());
+							} 
+						}else{
+							albumitem_selected_cb_bool[i] = "false";
+							tips[i].setBackgroundResource(R.drawable.albumitem_unselect_status);
+							albumitem_selected_cb.setChecked(false);
+							selectPaths.remove(file.getAbsolutePath());
+							if (file.getAbsolutePath().contains(mROOTLEFT)) {
+								selectPathsLeft.remove(file.getAbsolutePath());
+							} 
+						}
+					}
+				}else
 				if(childCount > 0 && i < childCount){
 					if(recordSelectPaths != null){
 						if(recordSelectPaths.contains(file.getAbsolutePath())){
