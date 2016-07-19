@@ -289,6 +289,7 @@ import com.terrydr.resource.R;
 						public void onClick(DialogInterface dialog,
 								int which) {
 							dialog.dismiss();
+							startAlbumItemAty();
 						}
 					});
 			builder.create().show();
@@ -303,6 +304,21 @@ import com.terrydr.resource.R;
 		}
 	}
 
+	/**
+	 * 点击下方缩略图或者拍照满九点击返回事件方法
+	 */
+	private void startAlbumItemAty(){
+		Intent intent = new Intent(CameraActivity.this, AlbumItemAty.class);
+		Bundle bundle = new Bundle();
+		bundle.putInt("zoom", zoom);  
+		bundle.putInt("childCount", childCount); //返回mViewPager.getChildCount()
+		bundle.putStringArrayList("selectPaths", recordSelectPaths);
+		bundle.putString("path", thumbPath);
+		bundle.putString("root", mSaveRootFile);
+		intent.putExtras(bundle);
+		startActivityForResult(intent, 0);
+	}
+	
 	@Override
 	public void onClick(View view) {
 		int currentX = (int) view.getX();
@@ -317,16 +333,7 @@ import com.terrydr.resource.R;
 			backPrevious();
 			break;
 		case R.id.btn_thumbnail: //点击下方缩略图的事件跳转
-			Intent intent = new Intent(CameraActivity.this, AlbumItemAty.class);
-			Bundle bundle = new Bundle();
-			bundle.putInt("zoom", zoom);  
-			bundle.putInt("childCount", childCount); //返回mViewPager.getChildCount()
-//			Log.e(TAG, "commitrecordSelectPaths:" + recordSelectPaths);
-			bundle.putStringArrayList("selectPaths", recordSelectPaths);
-			bundle.putString("path", thumbPath);
-			bundle.putString("root", mSaveRootFile);
-			intent.putExtras(bundle);
-			startActivityForResult(intent, 0);
+			startAlbumItemAty();
 			break;
 		default:
 			break;
@@ -334,14 +341,13 @@ import com.terrydr.resource.R;
 	}
 	
 	/**
-	 * 点出“完成”事件，或者拍满九张图片触发事件
+	 * 点出“完成”事件，或者拍满九张图片触发提交事件
 	 */
 	private void complete(){
 		//获取根目录下缩略图文件夹
 		String folder=FileOperateUtil.getFolderPath(this, FileOperateUtil.TYPE_IMAGE, mSaveRootFile);
 		//获取图片文件大图
 		List<File> imageList=FileOperateUtil.listFiles(folder, ".jpg");
-		
 		JSONObject result_Json = new JSONObject();
 		if (imageList != null) {
 			if (!imageList.isEmpty()) {
