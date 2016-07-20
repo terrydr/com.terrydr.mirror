@@ -355,17 +355,16 @@ public class CameraView extends SurfaceView implements CameraOperation {
 			mCamera.autoFocus(callback);
 			return;
 		}
+		parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);  
+		
 		Rect focusRect = calculateTapArea(event.getRawX(), event.getRawY(), 1f);  
-//        Rect meteringRect = calculateTapArea(event.getRawX(), event.getRawY(), 1.5f);  
-  
-        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);  
-          
         if (parameters.getMaxNumFocusAreas() > 0) {  
             List<Camera.Area> focusAreas = new ArrayList<Camera.Area>();  
             focusAreas.add(new Camera.Area(focusRect, 1000));  
             parameters.setFocusAreas(focusAreas);  
         }  
   
+//      Rect meteringRect = calculateTapArea(event.getRawX(), event.getRawY(), 1.5f); 
 //        if (parameters.getMaxNumMeteringAreas() > 0) {  
 //            List<Camera.Area> meteringAreas = new ArrayList<Camera.Area>();  
 //            meteringAreas.add(new Camera.Area(meteringRect, 1000));  

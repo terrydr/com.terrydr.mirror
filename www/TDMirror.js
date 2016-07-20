@@ -5,7 +5,7 @@ tdTakePhotos: function(takeType, successCallback, errorCallback) {
                  successCallback,
                  errorCallback,
                  "TDMirror",
-                 "tdEyeTakePhotos",
+                 "tdMirrorTakePhotos",
                  [takeType]
                  );
     
@@ -17,7 +17,7 @@ tdSelectPhotos: function(successCallback, errorCallback) {
                  successCallback,
                  errorCallback,
                  "TDMirror",
-                 "tdEyeSelectPhotos",
+                 "tdMirrorSelectPhotos",
                  []
                  );
     
@@ -29,7 +29,7 @@ tdScanPhotos: function(paramDic,successCallback, errorCallback) {
                  successCallback,
                  errorCallback,
                  "TDMirror",
-                 "tdEyeScanPhotos",
+                 "tdMirrorScanPhotos",
                  [paramDic]
                  );
     

@@ -3,6 +3,8 @@ package com.terrydr.mirrorscopes;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +17,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -70,6 +73,11 @@ import com.terrydr.resource.R;
 	public static boolean PRE_CUPCAKE ; 
 	private ArrayList<String> recordSelectPaths;
 	private final static String mSaveRootFile = "pathImages";
+    private SharedPreferences preferences;   //保存勾选要提交的图片路径
+    private SharedPreferences.Editor editor;
+    private static final String SAVEFILENAME = "saveSelectPaths";
+    //记录activity,CameraActivity:true;AlbumItemAty:false
+    private static final String ISCAMERAACTIVITY = "isCameraActivity";  
 	
 	@SuppressWarnings("deprecation")
 	@Override
@@ -92,10 +100,10 @@ import com.terrydr.resource.R;
 		return_index_bt = (TextView) findViewById(R.id.return_index_bt);
 		photos_iv = (ImageView) findViewById(R.id.photos_iv);
 		ms_image_count_tv = (TextView) findViewById(R.id.ms_image_count_tv);
-		TextPaint tp = ms_image_count_tv.getPaint();  //安体加粗
+		TextPaint tp = ms_image_count_tv.getPaint();  //字体加粗
 	    tp.setFakeBoldText(true);
 	    ms_camera_tv = (TextView) findViewById(R.id.ms_camera_tv);
-		TextPaint ms_camera_tv_tp = ms_camera_tv.getPaint();  //安体加粗
+		TextPaint ms_camera_tv_tp = ms_camera_tv.getPaint();  //字体加粗
 		ms_camera_tv_tp.setFakeBoldText(true);
 	    
 	    complete_bt = (TextView) findViewById(R.id.complete_bt);
@@ -362,12 +370,29 @@ import com.terrydr.resource.R;
 				}
 			}
 		}
+		saveSharedPreferences(ISCAMERAACTIVITY,true); //保存选中图片数据到本地
 		Intent intent1 = new Intent();
 		Bundle bundle1 = new Bundle();
 		bundle1.putString("result_Json", result_Json.toString());
 		intent1.putExtras(bundle1);
 		this.setResult(5, intent1);
 		this.finish();
+	}
+	
+	/**
+	 * 保存选中的图片路径到本地文件
+	 * @param keyName     key名称
+	 * @param keyValue    对应key的值 
+	 */
+	private void saveSharedPreferences(String keyName,boolean keyValue){
+		//实例化SharedPreferences对象（第一步）
+		preferences = getSharedPreferences(SAVEFILENAME,Activity.MODE_PRIVATE);
+		//实例化SharedPreferences.Editor对象（第二步）
+		editor = preferences.edit();
+		//用putString的方法保存数据
+		editor.putBoolean(keyName, keyValue);  //保存记住的activity状态
+		//提交当前数据
+		editor.commit(); 
 	}
 
 	/**
@@ -460,7 +485,7 @@ import com.terrydr.resource.R;
 	 */
 	@Override
 	public void onTakePictureEnd(Bitmap bm,String imagePath,String thumbPath) {
-		startAlbumAty();  //拍照完成跳转
+//		startAlbumAty();  //拍照完成跳转
 		if(bm!=null){
 			setCameraText();
 			photos_iv.setEnabled(true);
@@ -487,19 +512,19 @@ import com.terrydr.resource.R;
 		btn_thumbnail.setVisibility(View.VISIBLE);
 	}
 	
-	/**
-	 * 拍照结束后跳转到AlbumAty
-	 */
-	public void startAlbumAty(){
-//		Intent intent = new Intent(this, AlbumAty.class);
-//		Bundle bundle = new Bundle();
-//		int mexposureNum = mExposureNum; // 曝光
-//		bundle.putInt("mexposureNum", mexposureNum);  
-//		bundle.putInt("wb_level", wb_level);  
-//		bundle.putInt("zoom", zoom);  
-//		intent.putExtras(bundle);
-//		startActivityForResult(intent, 0);
-	}
+//	/**
+//	 * 拍照结束后跳转到AlbumAty
+//	 */
+//	public void startAlbumAty(){
+////		Intent intent = new Intent(this, AlbumAty.class);
+////		Bundle bundle = new Bundle();
+////		int mexposureNum = mExposureNum; // 曝光
+////		bundle.putInt("mexposureNum", mexposureNum);  
+////		bundle.putInt("wb_level", wb_level);  
+////		bundle.putInt("zoom", zoom);  
+////		intent.putExtras(bundle);
+////		startActivityForResult(intent, 0);
+//	}
 
 	@Override
 	public void onAnimtionEnd(Bitmap bm, boolean isVideo) {
@@ -606,6 +631,10 @@ import com.terrydr.resource.R;
 		case MotionEvent.ACTION_UP:
 			if(mode==MODE_ZOOM){
 				mContainer.setPostAtTimeZoom();
+			}
+			switch (view.getId()) {
+			case R.id.photos_iv:
+				return false;
 			}
 			break;
 		case MotionEvent.ACTION_POINTER_DOWN:

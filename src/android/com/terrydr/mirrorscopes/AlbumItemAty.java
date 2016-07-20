@@ -66,6 +66,8 @@ public class AlbumItemAty extends Activity implements OnClickListener,OnSingleTa
     private SharedPreferences.Editor editor;
     private static final String SAVEFILENAME = "saveSelectPaths";
     private static final String SAVEKEYNAME = "sKey";
+    //记录activity,CameraActivity:true;AlbumItemAty:false
+    private static final String ISCAMERAACTIVITY = "isCameraActivity";  
     private final static String mROOTLEFT = "pathImages";  //保存图片的根目录
     private int childCount = 0;   
 	@Override
@@ -89,8 +91,8 @@ public class AlbumItemAty extends Activity implements OnClickListener,OnSingleTa
 					recordSelectPaths = new ArrayList<String>(keySet);
 				}
 			}
-			Log.e(TAG, "recordSelectPaths:" + recordSelectPaths);
-			Log.e(TAG, "recordSelectPaths.size:" + recordSelectPaths.size());
+//			Log.e(TAG, "recordSelectPaths:" + recordSelectPaths);
+//			Log.e(TAG, "recordSelectPaths.size:" + recordSelectPaths.size());
 		}
 		group = (ViewGroup)findViewById(R.id.imagegroup_ll); 
 		mViewPager=(AlbumViewPager)findViewById(R.id.albumviewpager);
@@ -526,7 +528,7 @@ public class AlbumItemAty extends Activity implements OnClickListener,OnSingleTa
 			return;
 		}
 		Set<String> selectPathsSet = new HashSet<String>(selectPaths);
-		saveSharedPreferences(SAVEKEYNAME,selectPathsSet); //保存数据到本地
+		saveSharedPreferences(SAVEKEYNAME,selectPathsSet); //保存选中图片数据到本地
 		Intent intent1 = new Intent();
 		Bundle bundle1 = new Bundle();
 		bundle1.putString("result_Json", result_Json.toString());
@@ -546,7 +548,6 @@ public class AlbumItemAty extends Activity implements OnClickListener,OnSingleTa
 	
 	/**
 	 * 保存选中的图片路径到本地文件
-	 * @param fileName   文件名称(.xml)
 	 * @param keyName     key名称
 	 * @param keyValue    对应key的值 
 	 */
@@ -554,22 +555,17 @@ public class AlbumItemAty extends Activity implements OnClickListener,OnSingleTa
 		//实例化SharedPreferences对象（第一步）
 		preferences = getSharedPreferences(SAVEFILENAME,Activity.MODE_PRIVATE);
 		//实例化SharedPreferences.Editor对象（第二步）
-		 editor = preferences.edit();
+		editor = preferences.edit();
 		//用putString的方法保存数据
-		editor.putStringSet(keyName, keyValue);
+		editor.putStringSet(keyName, keyValue);  
+		editor.putBoolean(ISCAMERAACTIVITY, false);  //保存记住的activity状态
 		//提交当前数据
 		editor.commit(); 
 	}
 	
 	/**
-	 * 保存选中的图片路径到本地文件
-	 * 
-	 * @param fileName
-	 *            文件名称(.xml)
-	 * @param keyName
-	 *            key名称
-	 * @param keyValue
-	 *            对应key的值
+	 * 读取本地文件数据
+	 * @param keyName key名称
 	 */
 	private Set<String> getSharedPreferences(String keyName) {
 		preferences = getSharedPreferences(SAVEFILENAME, Activity.MODE_PRIVATE);
