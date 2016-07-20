@@ -17,8 +17,12 @@ cordova-plugin-mirrorcamera
         });
 		
 使用说明：
+
 1.必须引用插件资源依赖库：src/android/TerrydrResour
+
 2.将依赖库拷贝到：项目工程路径/platforms/android/
+
 3.修改项目工程路径/platforms/android/project.properties文件
+
       添加代码 ：android.library.reference.1=TerrydrResource
 		
