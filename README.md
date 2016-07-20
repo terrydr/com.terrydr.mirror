@@ -24,5 +24,5 @@ cordova-plugin-mirrorcamera
 
 3.修改项目工程路径/platforms/android/project.properties文件
 
-      添加代码 ：android.library.reference.1=TerrydrResource
+      添加引用依赖代码 ：android.library.reference.1=TerrydrResource
 		
