@@ -91,8 +91,6 @@ public class AlbumItemAty extends Activity implements OnClickListener,OnSingleTa
 					recordSelectPaths = new ArrayList<String>(keySet);
 				}
 			}
-//			Log.e(TAG, "recordSelectPaths:" + recordSelectPaths);
-//			Log.e(TAG, "recordSelectPaths.size:" + recordSelectPaths.size());
 		}
 		group = (ViewGroup)findViewById(R.id.imagegroup_ll); 
 		mViewPager=(AlbumViewPager)findViewById(R.id.albumviewpager);
@@ -188,9 +186,6 @@ public class AlbumItemAty extends Activity implements OnClickListener,OnSingleTa
 				imageView.setLayoutParams(new LayoutParams(
 						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 				tips[i] = imageView;
-				Log.e(TAG, "childCount:" + childCount);
-				Log.e(TAG, "files:" + files.size());
-				Log.e(TAG, "i:" + i);
 				if(isPlugin){
 					if(recordSelectPaths != null){
 						if(recordSelectPaths.contains(file.getAbsolutePath())){

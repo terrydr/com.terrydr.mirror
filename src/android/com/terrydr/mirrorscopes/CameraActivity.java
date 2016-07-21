@@ -2,6 +2,7 @@ package com.terrydr.mirrorscopes;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -76,6 +77,7 @@ import com.terrydr.resource.R;
     private SharedPreferences preferences;   //保存勾选要提交的图片路径
     private SharedPreferences.Editor editor;
     private static final String SAVEFILENAME = "saveSelectPaths";
+    private static final String SAVEKEYNAME = "sKey";
     //记录activity,CameraActivity:true;AlbumItemAty:false
     private static final String ISCAMERAACTIVITY = "isCameraActivity";  
 	
@@ -352,6 +354,7 @@ import com.terrydr.resource.R;
 	 * 点出“完成”事件，或者拍满九张图片触发提交事件
 	 */
 	private void complete(){
+		ArrayList<String> selectPaths = new ArrayList<String>();// 选中的图片
 		//获取根目录下缩略图文件夹
 		String folder=FileOperateUtil.getFolderPath(this, FileOperateUtil.TYPE_IMAGE, mSaveRootFile);
 		//获取图片文件大图
@@ -361,6 +364,7 @@ import com.terrydr.resource.R;
 			if (!imageList.isEmpty()) {
 				JSONArray path = new JSONArray();
 				for (File p : imageList) {
+					selectPaths.add(p.getAbsolutePath());
 					path.put(p.getAbsolutePath());
 				}
 				try {
@@ -370,6 +374,8 @@ import com.terrydr.resource.R;
 				}
 			}
 		}
+		Set<String> selectPathsSet = new HashSet<String>(selectPaths);
+		saveSharedPreferences(SAVEKEYNAME,selectPathsSet); //保存选中图片数据到本地
 		saveSharedPreferences(ISCAMERAACTIVITY,true); //保存选中图片数据到本地
 		Intent intent1 = new Intent();
 		Bundle bundle1 = new Bundle();
@@ -377,6 +383,23 @@ import com.terrydr.resource.R;
 		intent1.putExtras(bundle1);
 		this.setResult(5, intent1);
 		this.finish();
+	}
+	
+	/**
+	 * 保存选中的图片路径到本地文件
+	 * @param keyName     key名称
+	 * @param keyValue    对应key的值 
+	 */
+	private void saveSharedPreferences(String keyName,Set<String> keyValue){
+		//实例化SharedPreferences对象（第一步）
+		preferences = getSharedPreferences(SAVEFILENAME,Activity.MODE_PRIVATE);
+		//实例化SharedPreferences.Editor对象（第二步）
+		editor = preferences.edit();
+		//用putString的方法保存数据
+		editor.putStringSet(keyName, keyValue);  
+		editor.putBoolean(ISCAMERAACTIVITY, false);  //保存记住的activity状态
+		//提交当前数据
+		editor.commit(); 
 	}
 	
 	/**
@@ -745,6 +768,7 @@ import com.terrydr.resource.R;
 	@Override
 	protected void onDestroy() {		
 		super.onDestroy();
+//		mContainer.releaseCamera();
 	}
 	@Override
 	protected void onResume() {		

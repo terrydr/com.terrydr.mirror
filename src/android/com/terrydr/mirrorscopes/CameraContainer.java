@@ -16,6 +16,7 @@ import android.media.ThumbnailUtils;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -373,10 +374,13 @@ public class CameraContainer extends RelativeLayout implements CameraOperation{
 					bufferos.close();
 					return bm;
 				} catch (Exception e) {
-					Toast.makeText(getContext(), "解析相机返回流失败",Toast.LENGTH_SHORT).show();
+					Toast.makeText(getContext(), "拍照失败，请重试",Toast.LENGTH_SHORT).show();
+					Log.e(TAG, "解析相机返回流失败",e);
+					releaseCamera();
 				}
 			} else {
 				Toast.makeText(getContext(), "拍照失败，请重试", Toast.LENGTH_SHORT).show();
+				Log.e(TAG, "拍照失败，请重试");
 			}
 			return null;
 		}
@@ -430,6 +434,10 @@ public class CameraContainer extends RelativeLayout implements CameraOperation{
 	
 	public void setWB(String wbValue){
 		mCameraView.setWB(wbValue);
+	}
+	
+	public void releaseCamera(){
+		mCameraView.releaseCamera();
 	}
 	
 	/**

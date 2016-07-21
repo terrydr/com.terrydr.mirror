@@ -1,11 +1,8 @@
 package com.terrydr.mirrorscopes;
 
-import java.util.Set;
-
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONException;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -70,12 +67,12 @@ public class Plugin_intent extends CordovaPlugin {
 		} else if (action.equals("tdMirrorSelectPhotos")) { 
 			this.callbackContext = callbackContext;
 			Log.e(TAG, "tdMirrorSelectPhotos:" + callbackContext);
-			boolean keySet = getSharedPreferences(ISCAMERAACTIVITY);
-			if(keySet){
-				startCameraActivityBySelectPhotos();
-			}else{
+//			boolean keySet = getSharedPreferences(ISCAMERAACTIVITY);
+//			if(keySet){//判断要跳转到哪个activity
+//				startCameraActivityBySelectPhotos();
+//			}else{
 				startAlbumItemAty();
-			}
+//			}
 			return true;
 		} else if (action.equals("tdMirrorScanPhotos")) { // 大图片预览界面参数{data:[图片路径，图片路径]}
 			this.callbackContext = callbackContext;

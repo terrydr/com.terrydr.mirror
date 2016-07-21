@@ -121,9 +121,12 @@ public class CameraView extends SurfaceView implements CameraOperation {
 		@Override
 		public void surfaceCreated(SurfaceHolder holder) {
 			try {
+//				Log.e(TAG, "mCamera:"+ mCamera);
 				if (mCamera == null) {
+//					Log.e(TAG, "mCamera1:"+ mCamera);
 					openCamera();
 				}
+//				Log.e(TAG, "mCamera2:"+ mCamera);
 				setCameraParameters();
 				mCamera.setPreviewDisplay(getHolder());
 			} catch (Exception e) {
@@ -133,7 +136,7 @@ public class CameraView extends SurfaceView implements CameraOperation {
 				}
 				//android版本小于6.0 弹窗提醒
 				Toast.makeText(getContext(), "未获得相机权限，请到设置中授权后再尝试。", Toast.LENGTH_SHORT).show();
-				Log.e(TAG, "未获得相机权限，请到设置中授权后再尝试。"+e.getMessage());
+				Log.e(TAG, "未获得相机权限，请到设置中授权后再尝试。",e);
 				cActivity.finish();
 				return;
 			}
@@ -161,11 +164,22 @@ public class CameraView extends SurfaceView implements CameraOperation {
 			}
 		}
 	};
+	
+	public void releaseCamera(){
+		if (mCamera != null) {
+			mCamera.stopPreview();
+			mCamera.release();
+			mCamera = null;
+		}
+	}
 
 	/**
 	 * 设置相机参数
 	 */
 	private void setCameraParameters() {
+		if(mCamera == null){
+			return ;
+		}
 		Camera.Parameters parameters = mCamera.getParameters();
 //        LOG.e(TAG, "this.getWidth():" + this.getWidth() + "-this.getHeight():" + this.getHeight());
 //        ratio = (float) this.getWidth() / this.getHeight();
@@ -309,8 +323,11 @@ public class CameraView extends SurfaceView implements CameraOperation {
 			}
 		} else {
 			try {
+//				Log.e(TAG, "mCamera10:"+ mCamera);
 				mCamera = Camera.open();
+//				Log.e(TAG, "mCamera11:"+ mCamera);
 			} catch (Exception e) {
+//				Log.e(TAG, "mCamera11111:",e);
 				mCamera = null;
 				return false;
 			}
@@ -505,7 +522,8 @@ public class CameraView extends SurfaceView implements CameraOperation {
 	@Override
 	public void setCameraISO(int iso,boolean lightOn) {
 		if (mCamera == null) {
-			mCamera = Camera.open();
+//			mCamera = Camera.open();
+			openCamera();
 		}
 		Camera.Parameters parameters = mCamera.getParameters();
 		setBestExposure(parameters,lightOn);
@@ -580,7 +598,8 @@ public class CameraView extends SurfaceView implements CameraOperation {
 	public void setZoom(int zoom) {
 		if (mCamera == null)
 //			return;
-			mCamera = Camera.open();
+//			mCamera = Camera.open();
+			openCamera();
 		Camera.Parameters parameters;
 		// 注意此处为录像模式下的setZoom方式。在Camera.unlock之后，调用getParameters方法会引起android框架底层的异常
 		// stackoverflow上看到的解释是由于多线程同时访问Camera导致的冲突，所以在此使用录像前保存的mParameters。
