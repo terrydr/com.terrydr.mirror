@@ -10,6 +10,8 @@ package com.terrydr.resource;
 public final class R {
     public static final class anim {
         public static int focusview_show=0x7f040000;
+        public static int pickerview_push_bottom_in=0x7f040001;
+        public static int pickerview_push_bottom_out=0x7f040002;
     }
     public static final class attr {
         /** <p>Must be an integer value, such as "<code>100</code>".
@@ -64,6 +66,9 @@ containing a value of this type.
         /** 灰色 
          */
         public static int ms_font_color_white=0x7f050015;
+        /**  PickerView color 
+         */
+        public static int pickerview_province_line_border=0x7f050016;
         /** dialog中按钮字体颜色 
          */
         public static int primary_title_text_color=0x7f05000e;
@@ -131,32 +136,35 @@ containing a value of this type.
         public static int item_page_grid_checkbox=0x7f020017;
         public static int left_btn=0x7f020018;
         public static int left_btn_select=0x7f020019;
-        public static int pageitem_selected=0x7f02001a;
-        public static int pageitem_unselected=0x7f02001b;
-        public static int photos_iv=0x7f02001c;
-        public static int right_btn=0x7f02001d;
-        public static int right_btn_select=0x7f02001e;
-        public static int shape=0x7f02001f;
-        public static int single_btn=0x7f020020;
-        public static int single_btn_select=0x7f020021;
-        public static int top_left_but=0x7f020022;
-        public static int wb_auto=0x7f020023;
-        public static int wb_background=0x7f020024;
-        public static int wb_cloudy_daylight=0x7f020025;
-        public static int wb_daylight=0x7f020026;
-        public static int wb_incandescent=0x7f020027;
-        public static int wb_thumb=0x7f020028;
-        public static int wb_warm_fluorescent=0x7f020029;
-        public static int whitebalance_background=0x7f02002a;
-        public static int whitebalance_left=0x7f02002b;
-        public static int whitebalance_progress_black=0x7f02002c;
-        public static int whitebalance_progress_white=0x7f02002d;
-        public static int whitebalance_right=0x7f02002e;
-        public static int whitebalance_thumb=0x7f02002f;
-        public static int zoom_enlargement=0x7f020030;
-        public static int zoom_lessen=0x7f020031;
-        public static int zoom_setting_progressbar=0x7f020032;
-        public static int zoom_thumb=0x7f020033;
+        public static int ms_photos_iv=0x7f02001a;
+        public static int pageitem_selected=0x7f02001b;
+        public static int pageitem_unselected=0x7f02001c;
+        public static int photos_iv=0x7f02001d;
+        public static int pickerview_wheel_bg=0x7f02001e;
+        public static int pickerview_wheel_val=0x7f02001f;
+        public static int right_btn=0x7f020020;
+        public static int right_btn_select=0x7f020021;
+        public static int shape=0x7f020022;
+        public static int single_btn=0x7f020023;
+        public static int single_btn_select=0x7f020024;
+        public static int top_left_but=0x7f020025;
+        public static int wb_auto=0x7f020026;
+        public static int wb_background=0x7f020027;
+        public static int wb_cloudy_daylight=0x7f020028;
+        public static int wb_daylight=0x7f020029;
+        public static int wb_incandescent=0x7f02002a;
+        public static int wb_thumb=0x7f02002b;
+        public static int wb_warm_fluorescent=0x7f02002c;
+        public static int whitebalance_background=0x7f02002d;
+        public static int whitebalance_left=0x7f02002e;
+        public static int whitebalance_progress_black=0x7f02002f;
+        public static int whitebalance_progress_white=0x7f020030;
+        public static int whitebalance_right=0x7f020031;
+        public static int whitebalance_thumb=0x7f020032;
+        public static int zoom_enlargement=0x7f020033;
+        public static int zoom_lessen=0x7f020034;
+        public static int zoom_setting_progressbar=0x7f020035;
+        public static int zoom_thumb=0x7f020036;
     }
     public static final class id {
         public static int album_image_browse_tv=0x7f09000f;
@@ -175,9 +183,11 @@ containing a value of this type.
         public static int cance_back_iv=0x7f090013;
         public static int cance_bt=0x7f090015;
         public static int cancel_btn=0x7f090034;
+        public static int cancleButton=0x7f09003d;
         public static int checkbox=0x7f09003a;
         public static int commit_bt=0x7f09000b;
         public static int complete_bt=0x7f09002a;
+        public static int confirmButton=0x7f09003e;
         public static int confirm_btn=0x7f090038;
         public static int container=0x7f090000;
         public static int eye_left_select_count_tv=0x7f090021;
@@ -210,6 +220,8 @@ containing a value of this type.
         public static int ms_image_count_tv=0x7f090003;
         public static int neutral_btn=0x7f090036;
         public static int photos_iv=0x7f090026;
+        public static int pickerview_bottomLayou=0x7f09003f;
+        public static int pickerview_topLayou=0x7f09003c;
         public static int return_index_bt=0x7f090028;
         public static int right_count_tv=0x7f090009;
         public static int right_iv=0x7f090030;
@@ -234,6 +246,7 @@ containing a value of this type.
         public static int ms_customdialog=0x7f03000a;
         public static int ms_item_album_grid=0x7f03000b;
         public static int ms_item_album_pager=0x7f03000c;
+        public static int pickerview_popupwindow=0x7f03000d;
     }
     public static final class string {
         /**  存储文件文件夹 
@@ -293,6 +306,28 @@ containing a value of this type.
     public static final class style {
         public static int AppBaseTheme=0x7f070001;
         public static int mystyle=0x7f070000;
+        /** 
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    
+     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+       
+    </style>
+
+    Application theme.
+    <style name="AppTheme" parent="AppBaseTheme">
+        All customizations that are NOT specific to a particular API-level can go here.
+    </style>
+
+    <style name="theme_no_titlebar" parent="android:Theme.NoTitleBar">         
+	</style> 
+ pickerview 
+         */
+        public static int pickerview_popupAnimation=0x7f070002;
     }
     public static final class styleable {
         /** Attributes that can be used with a FocusImageView.

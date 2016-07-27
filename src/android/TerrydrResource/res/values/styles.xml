@@ -20,4 +20,9 @@
     <style name="theme_no_titlebar" parent="android:Theme.NoTitleBar">         
 	</style> -->
 	
+	<!-- pickerview -->
+	<style name="pickerview_popupAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pickerview_push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/pickerview_push_bottom_out</item>
+    </style>
 </resources>

@@ -25,4 +25,7 @@
     
     <color name="ms_font_color_gray">#9D9D9D</color><!--灰色 -->
     <color name="ms_font_color_white">#ffffff</color>
+    
+    <!-- PickerView color -->
+    <color name="pickerview_province_line_border">#D0D0D0</color>
 </resources>
